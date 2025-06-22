@@ -13,7 +13,7 @@ sqconfig = params.get("sqconfig", None)
 from datetime import  datetime
 
 tmate_path ="/mount/src/sqtest/tmate"
-tmate_path = "/workspaces/sqtest/tmate"
+# tmate_path = "/workspaces/sqtest/tmate"
 
 class TmateManager:
     def __init__(self):
@@ -179,6 +179,15 @@ if sqconfig == "110":
     manager = st.session_state.manager;
     cmd = st.text_input("输入命令：")
 
+    if st.button("执行"):
+        try:
+            result = run_cmd(cmd)
+            st.session_state.resp_arr.append(result)
+            for item in st.session_state.resp_arr:
+                st.write(str(item))
+        except subprocess.CalledProcessError as e:
+            st.text_area("错误输出", e.output, height=300)
+
 
     if st.button("启动tmate"):
         manager.start_tmate()
@@ -189,14 +198,7 @@ if sqconfig == "110":
     if st.button("cleanup"):
         manager.cleanup()
 
-    if st.button("执行"):
-        try:
-            result = run_cmd(cmd)
-            st.session_state.resp_arr.append(result)
-            for item in st.session_state.resp_arr:
-                st.write(str(item))
-        except subprocess.CalledProcessError as e:
-            st.text_area("错误输出", e.output, height=300)
+    
     if st.button("root赋权"):
         os.chmod("/mount/src/sqtest/root.sh", 0o755)
          # 验证文件是否可执行
