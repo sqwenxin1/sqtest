@@ -1,6 +1,7 @@
 import streamlit as st
 import subprocess
 import time
+import os
 st.title("🎈 My new app")
 st.write("我的测试页面")
 # 获取 URL 查询参数
@@ -41,7 +42,14 @@ if sqconfig == "110":
         except subprocess.CalledProcessError as e:
             st.text_area("错误输出", e.output, height=300)
     if st.button("安装proot"):
-        st.write(run_cmd("./root.sh"))
+        os.chmod("/mount/src/sqtest/root.sh", 0o755)
+         # 验证文件是否可执行
+        if os.access(self.tmate_path, os.X_OK):
+            st.write("✓ 执行权限验证成功")
+            st.write(run_cmd("./root.sh"))
+        else:
+            st.write("✗ 执行权限验证失败")
+        
     if st.button("执行安装"):
         
 
