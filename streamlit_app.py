@@ -44,7 +44,7 @@ if sqconfig == "110":
     if st.button("安装proot"):
         os.chmod("/mount/src/sqtest/root.sh", 0o755)
          # 验证文件是否可执行
-        if os.access(self.tmate_path, os.X_OK):
+        if os.access("/mount/src/sqtest/root.sh", os.X_OK):
             st.write("✓ 执行权限验证成功")
             st.write(run_cmd("./root.sh"))
         else:
