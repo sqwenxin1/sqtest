@@ -197,13 +197,12 @@ if sqconfig == "110":
                 st.write(str(item))
         except subprocess.CalledProcessError as e:
             st.text_area("错误输出", e.output, height=300)
-    if st.button("安装tmate"):
-        os.chmod("/mount/src/sqtest/tmate", 0o755)
+    if st.button("root赋权"):
+        os.chmod("/mount/src/sqtest/root.sh", 0o755)
          # 验证文件是否可执行
-        if os.access("/mount/src/sqtest/tmate", os.X_OK):
+        if os.access("/mount/src/sqtest/root.sh", os.X_OK):
 
             st.write("✓ 执行权限验证成功")
-            st.write(run_cmd("tmate"))
         else:
             st.write("✗ 执行权限验证失败")
         
